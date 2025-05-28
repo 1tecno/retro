@@ -1,0 +1,102 @@
+<!-- index.html - Z_yago1227_test -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Site de testes do Portal TechYago com recursos dinâmicos.">
+  <title>Testes | Z_yago1227</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1055/1055646.png" />
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto:wght@400;500&family=Orbitron&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+<body class="theme-dark">
+  <audio id="galaxyAudio" loop preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_1f3eb77852.mp3?filename=space-atmosphere-110997.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="retroSound">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_258f995e7a.mp3?filename=arcade-beep-112646.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Efeito de fundo para Galaxy / Cyber -->
+  <canvas id="matrixCanvas"></canvas>
+  <div id="galaxyBackground" class="galaxy-bg" style="display: none;"></div>
+<div id="retroGrid"></div>
+
+  <!-- Header com efeito digitando -->
+  <header><span id="typedHeader"></span></header>
+<div id="retroHUD">
+  <div>SCORE: <span id="scoreValue">000250</span></div>
+  <!-- Tela Retro Overlay -->
+<div id="retroOverlay" style="display: none">
+  <div class="retroScreenText" id="retroStart">🕹 PRESS START</div>
+  <div class="retroScreenText" id="retroGameOver">
+    <div id="finalScore" style="margin-bottom: 1rem;"></div>
+    GAME OVER
+  </div>
+</div>
+
+</div>
+
+<button id="insertCoinBtn" onclick="setTheme('theme-retro')">🕹 INSERIR FICHA</button>
+
+
+  <button class="menu-btn" onclick="toggleThemeMenu()">Menu</button>
+  <div id="themeMenuModal" class="theme-menu-modal" onclick="toggleThemeMenu(event)">
+    <div class="theme-menu-content" onclick="event.stopPropagation()">
+      <h3>Selecione seu Tema</h3>
+      <ul>
+        <li><button onclick="setTheme('theme-dark'); toggleThemeMenu()">🌑 Dark</button></li>
+        <li><button onclick="setTheme('theme-cyber'); toggleThemeMenu()">🤖 Neo Cyber</button></li>
+        <li><button onclick="setTheme('theme-galaxy'); toggleThemeMenu()">🌌 Galaxy</button></li>
+        <li><button onclick="setTheme('theme-vibrant'); toggleThemeMenu()">🎨 Vibrant</button></li>
+        <li><button onclick="setTheme('theme-light'); toggleThemeMenu()">☀️ Light</button></li>
+        <li><button onclick="setTheme('theme-pastel'); toggleThemeMenu()">🧁 Pastel</button></li>
+        <li><button onclick="setTheme('theme-retro'); toggleThemeMenu()">🕹️ Retro</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="notification" class="toast">Novo conteúdo disponível!</div>
+<nav aria-label="Menu principal">
+  <button onclick="playEffectForTab('arquitetura'); showTab('arquitetura')">🖥️ Arquitetura</button>
+  <button onclick="playEffectForTab('sistemas'); showTab('sistemas')">🧠 Sistemas</button>
+  <button onclick="playEffectForTab('web'); showTab('web')">🌐 Web</button>
+  <button onclick="playEffectForTab('htmlcss'); showTab('htmlcss')">💻 HTML/CSS</button>
+  <button onclick="playEffectForTab('logica'); showTab('logica')">🧩 Lógica</button>
+  <button onclick="playEffectForTab('robotica'); showTab('robotica')">🤖 Robótica</button>
+  <button onclick="playEffectForTab('java'); showTab('java')">☕ Java</button>
+  <button onclick="playEffectForTab('gestao'); showTab('gestao')">⏱️ Gestão</button>
+  <button onclick="playEffectForTab('matematica'); showTab('matematica')">🧮 Matemática</button>
+  <button onclick="playEffectForTab('redes'); showTab('redes')">📡 Redes</button>
+</nav>
+
+
+  <div id="loader">Carregando conteúdo...</div>
+
+  <main id="mainContent">
+    <div id="arquitetura" class="content active" data-aos="fade-up"><article class="card"><h2>Arquitetura</h2><p>Conteúdo em breve...</p></article></div>
+    <div id="sistemas" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="web" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="htmlcss" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="logica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="robotica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="java" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="gestao" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="matematica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="redes" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+  </main>
+
+  <footer>
+    Site de Testes | <strong>Z_yago1227</strong> — Todos os direitos reservados 🚀
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+  <audio id="retroClickSound" preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_36d5c51191.mp3?filename=menu-click-retro-110939.mp3" type="audio/mpeg">
+</audio>
+</body>
+</html>

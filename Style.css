@@ -1,0 +1,358 @@
+/* style.css - Z_yago1227_test */
+
+/* Fontes: Roboto (padrão), Montserrat (títulos), Orbitron (cyber), Press Start 2P (retro) */
+
+/* ========== TEMAS ========== */
+:root {
+  --bg-main: #000;
+  --bg-header: #0a0a0a;
+  --bg-tab: #1a1a1a;
+  --bg-card: #111;
+  --highlight: #FFD700;
+  --text-color: #4fc3f7;
+  --toast-bg: rgba(0, 0, 0, 0.8);
+  --toast-color: #fff;
+  --font: 'Roboto', sans-serif;
+}
+
+body.theme-light {
+  --bg-main: #f4f4f9;
+  --bg-header: #e2e8f0;
+  --bg-tab: #dbeafe;
+  --bg-card: #ffffff;
+  --highlight: #0077ff;
+  --text-color: #1a202c;
+}
+body.theme-vibrant {
+  --bg-main: #1e1e3f;
+  --bg-header: #3b0a59;
+  --bg-tab: #7400b8;
+  --bg-card: #5e60ce;
+  --highlight: #ffba08;
+  --text-color: #ffffff;
+}
+body.theme-pastel {
+  --bg-main: #ffe5ec;
+  --bg-header: #ffc2d1;
+  --bg-tab: #ffb3c1;
+  --bg-card: #ffcad4;
+  --highlight: #d291bc;
+  --text-color: #5c5470;
+}
+body.theme-cyber {
+  --bg-main: #0d0d0d;
+  --bg-header: #1a1a1a;
+  --bg-tab: rgba(0,255,255,0.08);
+  --bg-card: #121212;
+  --highlight: #39ff14;
+  --text-color: #00f7ff;
+  --font: 'Orbitron', sans-serif;
+}
+body.theme-galaxy {
+  --bg-main: #0b0c2a;
+  --bg-header: #1c1b3a;
+  --bg-tab: #292758;
+  --bg-card: rgba(31, 29, 68, 0.7);
+  --highlight: #c77dff;
+  --text-color: #a0c4ff;
+}
+body.theme-retro {
+  --bg-main: #000;
+  --bg-header: #1a1a1a;
+  --bg-tab: #2a2a2a;
+  --bg-card: #111;
+  --highlight: #00ff00;
+  --text-color: #00ff00;
+  --font: 'Press Start 2P', cursive;
+}
+
+/* ========== BASE ========== */
+body {
+  font-family: var(--font);
+  background: var(--bg-main);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: background 0.4s, color 0.4s;
+}
+
+header {
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--bg-header);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* ========== GALAXY ========== */
+.galaxy-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: radial-gradient(ellipse at center, #000428 0%, #004e92 100%);
+  z-index: -1;
+  overflow: hidden;
+  animation: pulse 10s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+/* ========== MATRIX CANVAS (CYBER) ========== */
+#matrixCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  display: none;
+}
+
+/* ========== BOTÃO MENU ========== */
+.menu-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-tab);
+  color: var(--text-color);
+  border: 1px solid var(--highlight);
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.3s;
+}
+.menu-btn:hover {
+  background: var(--highlight);
+  color: black;
+  transform: scale(1.05);
+}
+
+/* ========== MENU DE TEMA ========== */
+.theme-menu-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+}
+.theme-menu-content {
+  background: var(--bg-tab);
+  padding: 1rem;
+  border-radius: 8px;
+  width: 280px;
+  animation: slideIn 0.3s ease-out;
+  color: var(--text-color);
+}
+.theme-menu-content button {
+  width: 100%;
+  padding: 0.7rem;
+  background: none;
+  border: 1px solid var(--highlight);
+  color: var(--text-color);
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.theme-menu-content button:hover {
+  background: var(--highlight);
+  color: black;
+  transform: scale(1.03);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== NAVEGAÇÃO ========== */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: var(--bg-tab);
+  padding: 1rem;
+}
+nav button {
+  margin: 0.3rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--highlight);
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: 0.3s;
+  font-family: var(--font);
+}
+nav button:hover {
+  background: var(--highlight);
+  color: black;
+  box-shadow: 0 0 12px var(--highlight);
+}
+
+/* ========== CARDS DE CONTEÚDO ========== */
+main {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.content {
+  display: none;
+}
+.content.active {
+  display: block;
+}
+.card {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  cursor: pointer;
+  transition: 0.3s;
+  background-image: var(--gradient-dark);
+}
+.card:hover {
+  background: var(--highlight);
+  color: black;
+  transform: translateY(-3px);
+  box-shadow: 0 0 10px var(--highlight);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  text-align: center;
+  background: var(--bg-header);
+  color: var(--text-color);
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+/* ========== TOAST / NOTIFICAÇÕES ========== */
+.toast {
+  visibility: hidden;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--toast-bg);
+  color: var(--toast-color);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  z-index: 999;
+  opacity: 0;
+  transition: 0.4s;
+}
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
+/* ========== OVERLAY RETRO ========== */
+#retroOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: black;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: 'Press Start 2P', cursive;
+  color: #00ff00;
+  font-size: 2rem;
+  text-align: center;
+  animation: crtFlash 1s infinite;
+}
+
+#retroOverlay::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 4px
+  );
+  pointer-events: none;
+}
+
+.retroScreenText {
+  display: none;
+  animation: blink 1s step-end infinite;
+}
+
+#retroGameOver {
+  color: red;
+  font-size: 2rem;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@keyframes crtFlash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
+}
+/* ========== GRID TRON RETRO ========== */
+#retroGrid {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #000 0%, #000 60%, #002 100%);
+  overflow: hidden;
+  z-index: -2;
+  display: none;
+}
+
+.retro-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #00ff00;
+  opacity: 0.3;
+  animation: scrollLines 3s linear infinite;
+}
+
+@keyframes scrollLines {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(-100%); }
+}
+
+.retro-column {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: #00ff00;
+  opacity: 0.2;
+}
+/* ========== SPRITES FLUTUANTES RETRÔ ========== */
+.retro-sprite {
+  position: fixed;
+  z-index: 5000;
+  width: 32px;
+  height: 32px;
+  animation: floatSprite 8s linear infinite;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+@keyframes floatSprite {
+  from {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateY(-10vh) rotate(360deg);
+    opacity: 0;
+  }
+}
