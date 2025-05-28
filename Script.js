@@ -270,3 +270,16 @@ function spawnRetroSprites() {
 
 // Chama sprites periodicamente
 setInterval(spawnRetroSprites, 2500);
+function playRetroClickSound() {
+  const audio = document.getElementById("retroClickSound");
+  if (document.body.classList.contains("theme-retro")) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+// Aplica o som ao clicar nos botões de navegação
+document.querySelectorAll("nav button").forEach(btn => {
+  btn.addEventListener("click", playRetroClickSound);
+});
+
