@@ -2,12 +2,39 @@
 
 AOS.init();
 
+// Verifica se já existe nome salvo
 let visitorName = localStorage.getItem("visitorName");
+
 if (!visitorName) {
-  visitorName = prompt("Qual seu nome?");
-  if (visitorName) localStorage.setItem("visitorName", visitorName);
+  const intro = document.getElementById("introScreen");
+  const theme = localStorage.getItem("theme") || autoThemeByTime();
+  if (intro) {
+    intro.classList.add(theme); // aplica tema à tela de entrada
+    intro.style.display = "flex";
+  }
+} else {
+  iniciarMensagemBoasVindas(visitorName);
 }
 
+
+// Função chamada ao clicar em START
+function saveVisitorName() {
+  const input = document.getElementById("nameInput").value.trim();
+  if (input) {
+    localStorage.setItem("visitorName", input);
+    document.getElementById("introScreen").style.display = "none";
+    iniciarMensagemBoasVindas(input);
+  } else {
+    alert("Por favor, digite seu nome.");
+  }
+}
+
+// Animação com efeito digitado
+function iniciarMensagemBoasVindas(nome) {
+  typeWriter(`Bem-vindo ${nome} ao Portal TechYago`, "typedHeader", 90);
+}
+
+// Função de digitação
 function typeWriter(text, elId, speed = 100) {
   let i = 0;
   const el = document.getElementById(elId);
@@ -18,23 +45,32 @@ function typeWriter(text, elId, speed = 100) {
     if (i === text.length) clearInterval(typing);
   }, speed);
 }
-typeWriter(`Bem-vindo ${visitorName || ''} ao Portal TechYago`, "typedHeader", 90);
 
+// Esconde loader
 window.addEventListener('load', () => {
   document.getElementById("loader").style.display = "none";
 });
 
+// Abas com loading retrô
 function showTab(tabId) {
-  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  trackAchievement(tabId);
+  if (document.body.classList.contains("theme-retro")) {
+    const toast = document.getElementById("notification");
+    toast.textContent = `LOADING ${tabId.toUpperCase()}...`;
+    toast.classList.add("show");
 
-  // Atualiza SCORE no modo Retro
-  if (document.body.classList.contains('theme-retro')) {
-    updateScore();
+    setTimeout(() => {
+      toast.classList.remove("show");
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      trackAchievement(tabId);
+      updateScore();
+    }, 1000);
+  } else {
+    document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    trackAchievement(tabId);
   }
 }
-
 
 function playEffectForTab(tabId) {
   const icons = {
@@ -140,7 +176,6 @@ function setTheme(themeName) {
   currentTheme = themeName;
 }
 
-
 const savedTheme = localStorage.getItem('theme') || autoThemeByTime();
 let score = 250;
 const scoreDisplay = document.getElementById("scoreValue");
@@ -149,34 +184,6 @@ function updateScore(points = 10) {
   score += points;
   if (scoreDisplay) scoreDisplay.textContent = score.toString().padStart(6, '0');
 }
-
-let currentTheme = localStorage.getItem('theme') || autoThemeByTime();
-
-function setTheme(themeName) {
-  document.body.className = themeName;
-  localStorage.setItem('theme', themeName);
-
-  document.getElementById("galaxyBackground").style.display = themeName === "theme-galaxy" ? "block" : "none";
-  document.getElementById("matrixCanvas").style.display = themeName === "theme-cyber" ? "block" : "none";
-
-  if (themeName === "theme-galaxy") document.getElementById("galaxyAudio").play();
-  else document.getElementById("galaxyAudio").pause();
-
-  if (themeName === "theme-retro") {
-    document.getElementById("retroSound").play();
-    showRetroStartScreen();
-  } else {
-    if (currentTheme === "theme-retro") {
-      showRetroGameOverScreen();
-      document.getElementById("retroSound").pause();
-    }
-  }
-
-  if (themeName === "theme-cyber") startMatrix();
-
-  currentTheme = themeName;
-}
-
 
 document.querySelectorAll(".card").forEach(card => {
   card.addEventListener("click", () => showToast("Este conteúdo estará disponível em breve! 🚧"));
@@ -228,7 +235,8 @@ function trackAchievement(tabId) {
     localStorage.setItem("visitedAll", true);
     showToast("🏆 Parabéns! Você visitou todas as abas!");
   }
-} 
+}
+
 function generateRetroGrid() {
   const grid = document.getElementById("retroGrid");
   grid.innerHTML = "";
@@ -247,6 +255,7 @@ function generateRetroGrid() {
     grid.appendChild(col);
   }
 }
+
 function spawnRetroSprites() {
   if (!document.body.classList.contains('theme-retro')) return;
 
@@ -270,6 +279,7 @@ function spawnRetroSprites() {
 
 // Chama sprites periodicamente
 setInterval(spawnRetroSprites, 2500);
+
 function playRetroClickSound() {
   const audio = document.getElementById("retroClickSound");
   if (document.body.classList.contains("theme-retro")) {
@@ -282,4 +292,80 @@ function playRetroClickSound() {
 document.querySelectorAll("nav button").forEach(btn => {
   btn.addEventListener("click", playRetroClickSound);
 });
+function openDataCenterModal() {
+  const modal = document.getElementById("dataCenterModal");
+  modal.className = "modal-overlay"; // reseta qualquer tema anterior
 
+  const theme = document.body.className; // ex: "theme-retro"
+  if (theme) modal.classList.add(theme); // adiciona classe ex: "theme-retro"
+  
+  modal.style.display = "flex";
+}
+
+
+function closeDataCenterModal() {
+  document.getElementById("dataCenterModal").style.display = "none";
+}
+
+function showAnswer(id) {
+  const box = document.getElementById("answerBox");
+  const answers = {
+    1: "Data centers são instalações que abrigam servidores e sistemas de armazenamento, responsáveis por processar, armazenar e distribuir dados e aplicações.",
+    2: "A separação geográfica entre data centers é necessária por segurança: evita perda de dados e serviços em caso de falhas regionais (como desastres naturais ou quedas de energia).",
+    3: "Eles consomem energia e água principalmente para manter os servidores resfriados — já que funcionam 24/7 e geram muito calor, exigindo sistemas de refrigeração intensivos."
+  };
+  box.innerText = answers[id];
+}
+const selectedThemes = [];
+const themeButtons = document.querySelectorAll('.theme-btn');
+const chosenList = document.getElementById('chosen-list');
+const startBtn = document.getElementById('start-btn');
+
+themeButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const theme = btn.dataset.theme;
+    if (!selectedThemes.includes(theme)) {
+      selectedThemes.push(theme);
+      const li = document.createElement('li');
+      li.textContent = theme;
+      chosenList.appendChild(li);
+    }
+  });
+});
+
+startBtn.addEventListener('click', () => {
+  const username = document.getElementById('username').value.trim();
+  if (username === '' || selectedThemes.length === 0) {
+    alert('Por favor, digite seu nome e selecione ao menos 1 tema.');
+    return;
+  }
+
+  // Armazenar as preferências e reorganizar menu
+  localStorage.setItem('username', username);
+  localStorage.setItem('preferredThemes', JSON.stringify(selectedThemes));
+
+  // Esconder tela de recepção
+  document.getElementById('welcome-screen').style.display = 'none';
+
+  // Organizar o menu lateral
+  const menu = document.getElementById('menu-temas'); // Alvo do menu real
+  if (menu) {
+    menu.innerHTML = ''; // Limpa menu atual
+    selectedThemes.forEach(theme => {
+      const li = document.createElement('li');
+      li.textContent = theme;
+      li.classList.add(`tema-${theme.toLowerCase()}`);
+      menu.appendChild(li);
+    });
+  }
+
+  alert(`Bem-vindo, ${username}! Tema principal: ${selectedThemes[0]}`);
+});
+for (let i = 0; i < 150; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.top = `${Math.random() * 100}vh`;
+  star.style.left = `${Math.random() * 100}vw`;
+  star.style.animationDuration = `${1 + Math.random() * 3}s`;
+  document.body.appendChild(star);
+}
