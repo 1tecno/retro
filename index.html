@@ -1,4 +1,3 @@
-<!-- index.html - Z_yago1227_test -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -12,6 +11,15 @@
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 <body class="theme-dark">
+
+  <!-- INTRODUÇÃO RETRÔ -->
+  <div id="introScreen" class="intro-retro" style="display: none;">
+    <h1 class="intro-title">👾 Bem-vindo ao Portal TechYago</h1>
+    <label for="nameInput">Digite seu nome:</label>
+    <input type="text" id="nameInput" maxlength="20" placeholder="Seu nome aqui...">
+    <button onclick="saveVisitorName()">▶ START</button>
+  </div>
+
   <audio id="galaxyAudio" loop preload="auto">
     <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_1f3eb77852.mp3?filename=space-atmosphere-110997.mp3" type="audio/mpeg">
   </audio>
@@ -19,29 +27,30 @@
     <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_258f995e7a.mp3?filename=arcade-beep-112646.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Efeito de fundo para Galaxy / Cyber -->
+  <!-- Efeitos de fundo -->
   <canvas id="matrixCanvas"></canvas>
   <div id="galaxyBackground" class="galaxy-bg" style="display: none;"></div>
-<div id="retroGrid"></div>
+  <div id="retroGrid"></div>
 
   <!-- Header com efeito digitando -->
   <header><span id="typedHeader"></span></header>
-<div id="retroHUD">
-  <div>SCORE: <span id="scoreValue">000250</span></div>
-  <!-- Tela Retro Overlay -->
-<div id="retroOverlay" style="display: none">
-  <div class="retroScreenText" id="retroStart">🕹 PRESS START</div>
-  <div class="retroScreenText" id="retroGameOver">
-    <div id="finalScore" style="margin-bottom: 1rem;"></div>
-    GAME OVER
+
+  <!-- HUD Retro -->
+  <div id="retroHUD">
+    <div>SCORE: <span id="scoreValue">000000</span></div>
+    <!-- Tela Retro Overlay -->
+    <div id="retroOverlay" style="display: none">
+      <div class="retroScreenText" id="retroStart">🕹 PRESS START</div>
+      <div class="retroScreenText" id="retroGameOver">
+        <div id="finalScore" style="margin-bottom: 1rem;"></div>
+        GAME OVER
+      </div>
+    </div>
   </div>
-</div>
 
-</div>
+  <button id="insertCoinBtn" onclick="setTheme('theme-retro')">🕹 INSERIR FICHA</button>
 
-<button id="insertCoinBtn" onclick="setTheme('theme-retro')">🕹 INSERIR FICHA</button>
-
-
+  <!-- Botão e menu de temas -->
   <button class="menu-btn" onclick="toggleThemeMenu()">Menu</button>
   <div id="themeMenuModal" class="theme-menu-modal" onclick="toggleThemeMenu(event)">
     <div class="theme-menu-content" onclick="event.stopPropagation()">
@@ -59,44 +68,50 @@
   </div>
 
   <div id="notification" class="toast">Novo conteúdo disponível!</div>
-<nav aria-label="Menu principal">
-  <button onclick="playEffectForTab('arquitetura'); showTab('arquitetura')">🖥️ Arquitetura</button>
-  <button onclick="playEffectForTab('sistemas'); showTab('sistemas')">🧠 Sistemas</button>
-  <button onclick="playEffectForTab('web'); showTab('web')">🌐 Web</button>
-  <button onclick="playEffectForTab('htmlcss'); showTab('htmlcss')">💻 HTML/CSS</button>
-  <button onclick="playEffectForTab('logica'); showTab('logica')">🧩 Lógica</button>
-  <button onclick="playEffectForTab('robotica'); showTab('robotica')">🤖 Robótica</button>
-  <button onclick="playEffectForTab('java'); showTab('java')">☕ Java</button>
-  <button onclick="playEffectForTab('gestao'); showTab('gestao')">⏱️ Gestão</button>
-  <button onclick="playEffectForTab('matematica'); showTab('matematica')">🧮 Matemática</button>
-  <button onclick="playEffectForTab('redes'); showTab('redes')">📡 Redes</button>
-</nav>
 
+  <nav aria-label="Menu principal">
+    <button onclick="playEffectForTab('arquitetura'); showTab('arquitetura')">🖥️ Arquitetura</button>
+    <button onclick="playEffectForTab('sistemas'); showTab('sistemas')">🧠 Sistemas</button>
+    <button onclick="playEffectForTab('web'); showTab('web')">🌐 Web</button>
+    <button onclick="playEffectForTab('htmlcss'); showTab('htmlcss')">💻 HTML/CSS</button>
+    <button onclick="playEffectForTab('logica'); showTab('logica')">🧩 Lógica</button>
+    <button onclick="playEffectForTab('robotica'); showTab('robotica')">🤖 Robótica</button>
+    <button onclick="playEffectForTab('java'); showTab('java')">☕ Java</button>
+    <button onclick="playEffectForTab('gestao'); showTab('gestao')">⏱️ Gestão</button>
+    <button onclick="playEffectForTab('matematica'); showTab('matematica')">🧮 Matemática</button>
+    <button onclick="playEffectForTab('redes'); showTab('redes')">📡 Redes</button>
+  </nav>
 
   <div id="loader">Carregando conteúdo...</div>
 
   <main id="mainContent">
-    <div id="arquitetura" class="content active" data-aos="fade-up"><article class="card"><h2>Arquitetura</h2><p>Conteúdo em breve...</p></article></div>
-    <div id="sistemas" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="web" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="htmlcss" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="logica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="robotica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-<div id="java" class="content" data-aos="fade-up">
-  <article class="card">
-    <h2>Projeto Mercado POO em Java</h2>
-    <p>Baixe o arquivo executável do projeto:</p>
-    <p>
-      <a href="MercadoMRD.jar" download>
-        👉 Clique aqui para baixar o MercadoMRD.jar
-      </a>
-    </p>
-  </article>
-</div>
-    <div id="gestao" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="matematica" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
-    <div id="redes" class="content" data-aos="fade-up"><article class="card"><p>Conteúdo em breve...</p></article></div>
+    <div id="arquitetura" class="content active" data-aos="fade-up"><article class="card"><h2>Arquitetura e Manutenção dos Computadores</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="sistemas" class="content" data-aos="fade-up"><article class="card"><h2>Sistemas Operacionais</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="web" class="content" data-aos="fade-up"><article class="card"><h2>Programação Web</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="htmlcss" class="content" data-aos="fade-up"><article class="card"><h2>HTML/CSS</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="logica" class="content" data-aos="fade-up"><article class="card"><h2>Lógica de Programação</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="robotica" class="content" data-aos="fade-up"><article class="card"><h2>Robótica</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="java" class="content" data-aos="fade-up"><article class="card"><h2>Programação Orientada a Objeto em Java</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="gestao" class="content" data-aos="fade-up"><article class="card"><h2>Gestão do Tempo</h2><p>Conteúdos em breve...</p></article></div>
+    <div id="matematica" class="content" data-aos="fade-up"><article class="card"><h2>Matemática</h2><p>Conteúdo de Intervenção Pedagógica em breve...</p></article></div>
+    <div id="redes" class="content" data-aos="fade-up"><article class="card"><h2>Testes</h2><p>Página totalmente relacionada com testes, não será muito utilizada, a não ser pelo seu desenvolvedor EUZINHO S2</p></article></div>
   </main>
+<!-- Seção Oculta: Data Centers -->
+<div id="dataCenterModal" class="modal-overlay">
+  <div class="modal-box">
+    <h2>🔍 Explorando os Data Centers</h2>
+    <ul>
+      <li onclick="showAnswer(1)">1. O que são data centers?</li>
+      <li onclick="showAnswer(2)">2. Por que os data centers precisam estar distantes um do outro?</li>
+      <li onclick="showAnswer(3)">3. Por que eles consomem muita energia e água?</li>
+    </ul>
+    <div id="answerBox" class="answer-box"></div>
+    <button onclick="closeDataCenterModal()">Fechar</button>
+    
+  </div>
+</div>
+
+<button class="secret-btn" onclick="openDataCenterModal()">📡 Área Secreta</button>
 
   <footer>
     Site de Testes | <strong>Z_yago1227</strong> — Todos os direitos reservados 🚀
@@ -106,7 +121,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
   <audio id="retroClickSound" preload="auto">
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_36d5c51191.mp3?filename=menu-click-retro-110939.mp3" type="audio/mpeg">
-</audio>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/23/audio_36d5c51191.mp3?filename=menu-click-retro-110939.mp3" type="audio/mpeg">
+  </audio>
 </body>
 </html>
